@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,16 +19,27 @@ public class NewGameActivity extends AppCompatActivity {
     private EditText gameName;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     public ArrayList<Game> arrayList;
+    public Integer arrayPosition;
     Helpers helpers;
 
 
-    //TODO - Kunna spara nytt spel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
         gameImage = findViewById(R.id.imageViewNewImage);
         gameName = findViewById(R.id.editTextGameName);
+        Intent intent = getIntent();
+        intent.getExtras();
+        arrayPosition = intent.getIntExtra("Position", 0);
+        Log.d("Position:", "" + arrayPosition);
+        if(arrayPosition >= 0){
+            String gameImageString = intent.getStringExtra("Image");
+            String gameNameString = intent.getStringExtra("Name");
+            Bitmap currentImage = helpers.getBitmapFromString(gameImageString);
+            gameImage.setImageBitmap(currentImage);
+            gameName.setText(gameNameString);
+        }
     }
 
     public void addImage(View view){
@@ -43,7 +55,12 @@ public class NewGameActivity extends AppCompatActivity {
         Bitmap bitmap = ((BitmapDrawable)gameImage.getDrawable()).getBitmap();
         String bitMapString = helpers.getStringFromBitmap(bitmap);
         String gameNameString = gameName.getText().toString();
-        arrayList.add(new Game(bitMapString, gameNameString));
+        if(arrayPosition == -1){
+            arrayList.add(new Game(bitMapString, gameNameString));
+        }else{
+            arrayList.get(arrayPosition).image = bitMapString;
+            arrayList.get(arrayPosition).name = gameNameString;
+        }
         helpers.saveData(arrayList, this);
         intent.putExtra("Image", bitMapString);
         intent.putExtra("Name", gameNameString);
@@ -57,9 +74,6 @@ public class NewGameActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             gameImage.setImageBitmap(imageBitmap);
-            //Konvertera bitmap till String
-            String bitMapString = helpers.getStringFromBitmap(imageBitmap);
-            //arrayList.add(new Game(bitMapString, ""));
         }
     }
 

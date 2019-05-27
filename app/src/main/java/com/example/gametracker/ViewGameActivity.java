@@ -14,10 +14,11 @@ import android.widget.TextView;
 public class ViewGameActivity extends AppCompatActivity {
     ImageView gameImage;
     TextView gameName;
+    String imageBitmapString;
+    Integer arrayPosition;
     Helpers helpers;
 
     //TODO - Kunna redigera valt spel
-    //TODO - Skicka valt spel till MainActivity för visning i recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,19 +29,29 @@ public class ViewGameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         intent.getExtras();
-        String imageBitmapString = intent.getStringExtra("Image");
+        imageBitmapString = intent.getStringExtra("Image");
         Bitmap stringImage = helpers.getBitmapFromString(imageBitmapString);
         gameImage.setImageBitmap(stringImage);
         String gameNames = intent.getStringExtra("Name");
         gameName.setText(gameNames);
+        arrayPosition = intent.getIntExtra("Position", -1);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Redigera spel
+                editGame();
             }
         });
+    }
+
+    private void editGame(){
+        Intent intent = new Intent(this, NewGameActivity.class);
+        intent.putExtra("Image", imageBitmapString);
+        intent.putExtra("Name", gameName.getText().toString());
+        intent.putExtra("Position", arrayPosition);
+        startActivity(intent);
+        finish();
     }
 }

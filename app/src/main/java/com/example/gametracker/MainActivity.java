@@ -15,12 +15,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO - Kunna se sparade spel i recyclerview
-    //TODO - Kunna lägga till nytt spel
     public ArrayList<Game> gameList;
     private RecyclerView mRecyclerView;
     private GameAdapter mAdapter;
-    public static final int NEW_GAME = 1;
     Helpers helpers;
 
     @Override
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewGameActivity.class);
+                intent.putExtra("Position", -1);
                 startActivity(intent);
             }
         });

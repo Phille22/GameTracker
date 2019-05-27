@@ -64,6 +64,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             Intent intent = new Intent(v.getContext(), ViewGameActivity.class);
             intent.putExtra("Image", arrayList.get(mPosition).image);
             intent.putExtra("Name",  arrayList.get(mPosition).name);
+            intent.putExtra("Position", mPosition);
             v.getContext().startActivity(intent);
         }
     }
