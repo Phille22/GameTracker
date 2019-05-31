@@ -1,10 +1,13 @@
 package com.example.gametracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +16,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     public ArrayList<Game> gameList;
     private RecyclerView mRecyclerView;
@@ -62,14 +65,17 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()){
             case R.id.action_delete:
-                gameList.clear();
-                mAdapter.notifyDataSetChanged();
-                helpers.saveData(gameList, this);
-                recycleSetup();
+                showAlert();
                 return true;
-
+            case R.id.action_sort:
+                View menuItemView = findViewById(R.id.action_sort);
+                PopupMenu popup = new PopupMenu(this, menuItemView);
+                popup.setOnMenuItemClickListener(this);
+                popup.inflate(R.menu.menu_sort);
+                popup.show();
+                return true;
                 default:
-
+                    //Gör ingenting
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,5 +85,46 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new GameAdapter(this, gameList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //När man klickar på ett sorteringsalternativ
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sort_name:
+                //gameList.sort();
+                return true;
+            case R.id.sort_playtime:
+                return true;
+                default:
+                    return false;
+        }
+    }
+
+    //Visa varningsmeddelande
+    public void showAlert(){
+        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
+        //Varningsmeddelandet
+        myAlertBuilder.setTitle("Är du säker?");
+        myAlertBuilder.setMessage("Vill du radera alla spel?");
+        //Knapparna för varningsmeddelandet
+        myAlertBuilder.setPositiveButton("JA", new DialogInterface.OnClickListener() {
+            //Ta bort listan
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                gameList.clear();
+                mAdapter.notifyDataSetChanged();
+                helpers.saveData(gameList, MainActivity.this);
+                recycleSetup();
+            }
+        });
+        myAlertBuilder.setNegativeButton("NEJ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Gör ingenting
+            }
+        });
+        //Skapa och visa varningsmeddelandet
+        myAlertBuilder.show();
     }
 }
