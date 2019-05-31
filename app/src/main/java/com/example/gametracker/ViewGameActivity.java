@@ -14,11 +14,12 @@ import android.widget.TextView;
 public class ViewGameActivity extends AppCompatActivity {
     ImageView gameImage;
     TextView gameName;
+    TextView gameConsole;
+    TextView hoursPlayed;
     String imageBitmapString;
     Integer arrayPosition;
     Helpers helpers;
 
-    //TODO - Kunna redigera valt spel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,8 @@ public class ViewGameActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         gameImage = findViewById(R.id.imageViewGameImage);
         gameName = findViewById(R.id.textViewGameName);
+        gameConsole = findViewById(R.id.textViewGameConsole);
+        hoursPlayed = findViewById(R.id.textViewHoursPlayed);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         intent.getExtras();
@@ -34,6 +37,10 @@ public class ViewGameActivity extends AppCompatActivity {
         gameImage.setImageBitmap(stringImage);
         String gameNames = intent.getStringExtra("Name");
         gameName.setText(gameNames);
+        String gameConsoleString = intent.getStringExtra("Console");
+        gameConsole.setText(gameConsoleString);
+        String hoursPlayedString = intent.getStringExtra("Hours");
+        hoursPlayed.setText(hoursPlayedString);
         arrayPosition = intent.getIntExtra("Position", -1);
 
 
@@ -50,6 +57,8 @@ public class ViewGameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewGameActivity.class);
         intent.putExtra("Image", imageBitmapString);
         intent.putExtra("Name", gameName.getText().toString());
+        intent.putExtra("Console", gameConsole.getText().toString());
+        intent.putExtra("Hours", hoursPlayed.getText().toString());
         intent.putExtra("Position", arrayPosition);
         startActivity(intent);
         finish();
