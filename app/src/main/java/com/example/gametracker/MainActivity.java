@@ -1,6 +1,5 @@
 package com.example.gametracker;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
@@ -34,13 +34,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), NewGameActivity.class);
-                intent.putExtra("Position", -1);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), NewGameActivity.class);
+            intent.putExtra("Position", -1);
+            startActivity(intent);
         });
     }
 
@@ -92,9 +89,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.sort_name:
-                //gameList.sort();
+                Collections.sort(gameList, (o1, o2) -> o1.name.compareTo(o2.name));
+                mAdapter.notifyDataSetChanged();
+                recycleSetup();
                 return true;
             case R.id.sort_playtime:
+                Collections.sort(gameList, (o1, o2) -> o2.hoursPlayed.compareTo(o1.hoursPlayed));
+                mAdapter.notifyDataSetChanged();
+                recycleSetup();
                 return true;
                 default:
                     return false;
@@ -108,21 +110,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         myAlertBuilder.setTitle("Är du säker?");
         myAlertBuilder.setMessage("Vill du radera alla spel?");
         //Knapparna för varningsmeddelandet
-        myAlertBuilder.setPositiveButton("JA", new DialogInterface.OnClickListener() {
-            //Ta bort listan
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                gameList.clear();
-                mAdapter.notifyDataSetChanged();
-                helpers.saveData(gameList, MainActivity.this);
-                recycleSetup();
-            }
+        //Ta bort listan
+        myAlertBuilder.setPositiveButton("JA", (dialog, which) -> {
+            gameList.clear();
+            mAdapter.notifyDataSetChanged();
+            helpers.saveData(gameList, MainActivity.this);
+            recycleSetup();
         });
-        myAlertBuilder.setNegativeButton("NEJ", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Gör ingenting
-            }
+        myAlertBuilder.setNegativeButton("NEJ", (dialog, which) -> {
+            //Gör ingenting
         });
         //Skapa och visa varningsmeddelandet
         myAlertBuilder.show();

@@ -12,4 +12,8 @@ public class Game {
         this.platform = platform;
         this.hoursPlayed = hoursPlayed;
     }
+
+    public String getName(){
+        return this.name;
+    }
 }

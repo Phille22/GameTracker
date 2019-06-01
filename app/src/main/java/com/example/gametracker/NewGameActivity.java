@@ -90,13 +90,19 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
 
     //Spara spelet
     public void saveGame(View view){
+        String bitMapString;
         arrayList = helpers.loadData(this);
         Intent intent = new Intent(this, ViewGameActivity.class);
         if(gameImage.getDrawable() == null){
-            //gameImage.setImageBitmap(R.);
+            bitMapString = "";
+        }else{
+            Bitmap bitmap = ((BitmapDrawable)gameImage.getDrawable()).getBitmap();
+            if(bitmap == null){
+                bitMapString = "";
+            }else{
+                bitMapString = helpers.getStringFromBitmap(bitmap);
+            }
         }
-        Bitmap bitmap = ((BitmapDrawable)gameImage.getDrawable()).getBitmap();
-        String bitMapString = helpers.getStringFromBitmap(bitmap);
         String gameNameString = gameName.getText().toString();
         String hoursPlayedString = hoursPlayed.getText().toString();
         //Skapa nytt objekt och spara i lista
