@@ -11,12 +11,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".NewGameActivity"
             android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
         </activity>
-        <activity
-            android:name=".ViewGameActivity"
+        <activity android:name=".ViewGameActivity"
             android:label="@string/title_activity_view_game"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"/>
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
