@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ViewGameActivity extends AppCompatActivity {
     ImageView gameImage;
-    TextView gameName;
+    String gameName;
     TextView gameConsole;
     TextView hoursPlayed;
     String imageBitmapString;
@@ -32,18 +32,18 @@ public class ViewGameActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         gameList = helpers.loadData(this);
         gameImage = findViewById(R.id.imageViewGameImage);
-        gameName = findViewById(R.id.textViewGameName);
+        //gameName = findViewById(R.id.textViewGameName);
         gameConsole = findViewById(R.id.textViewGameConsole);
-        hoursPlayed = findViewById(R.id.textViewHoursPlayed);;
+        hoursPlayed = findViewById(R.id.textViewHoursPlayed);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         intent.getExtras();
         imageBitmapString = intent.getStringExtra("Image");
         Bitmap stringImage = helpers.getBitmapFromString(imageBitmapString);
         gameImage.setImageBitmap(stringImage);
-        String gameNames = intent.getStringExtra("Name");
-        this.setTitle(gameNames);
-        gameName.setText(gameNames);
+        gameName = intent.getStringExtra("Name");
+        this.setTitle(gameName);
+        //gameName.setText(gameNames);
         String gameConsoleString = intent.getStringExtra("Console");
         gameConsole.setText(gameConsoleString);
         String hoursPlayedString = intent.getStringExtra("Hours");
@@ -76,7 +76,7 @@ public class ViewGameActivity extends AppCompatActivity {
     private void editGame(){
         Intent intent = new Intent(this, NewGameActivity.class);
         intent.putExtra("Image", imageBitmapString);
-        intent.putExtra("Name", gameName.getText().toString());
+        intent.putExtra("Name", gameName);
         intent.putExtra("Console", gameConsole.getText().toString());
         intent.putExtra("Hours", hoursPlayed.getText().toString());
         intent.putExtra("Position", arrayPosition);
@@ -88,7 +88,7 @@ public class ViewGameActivity extends AppCompatActivity {
         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(ViewGameActivity.this);
         //Varningsmeddelandet
         myAlertBuilder.setTitle("Är du säker?");
-        myAlertBuilder.setMessage("Vill du radera " + gameName.getText().toString() + "?");
+        myAlertBuilder.setMessage("Vill du radera " + gameName + "?");
         //Knapparna för varningsmeddelandet
         //Ta bort listan
         myAlertBuilder.setPositiveButton("JA", (dialog, which) -> {

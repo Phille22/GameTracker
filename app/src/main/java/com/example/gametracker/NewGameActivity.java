@@ -3,6 +3,8 @@ package com.example.gametracker;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class NewGameActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -24,6 +27,7 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
     private Spinner gameConsoleSelect;
     private String gameConsoleSelected;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_GET = 2;
     public ArrayList<Game> arrayList;
     public Integer arrayPosition;
     Helpers helpers;
@@ -89,6 +93,14 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    public void getImage(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
+        }
+    }
+
     //Spara spelet
     public void saveGame(View view){
         String bitMapString;
@@ -133,6 +145,18 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             gameImage.setImageBitmap(imageBitmap);
+        }
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+            try {
+                Uri image = data.getData();
+                Bitmap thumb = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
+                //Skala ned bitmap
+                thumb = helpers.scaleDownBitmap(thumb, 100, this);
+                //Konvertera bitmap till string
+                gameImage.setImageBitmap(thumb);
+            } catch (IOException e) {
+                Log.e("Error", "" + e);
+            }
         }
     }
 

@@ -24,8 +24,8 @@
         android:layout_width="175dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextGameName"
+        android:layout_marginBottom="412dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,24 +35,29 @@
         android:id="@+id/buttonAddGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="114dp"
         android:onClick="addImage"
-        android:text="Add image"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveGame"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Take Picture"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSaveGame"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerGameSystem" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewNewImage" />
 
     <Button
         android:id="@+id/buttonSaveGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:onClick="saveGame"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/buttonAddGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAddGame" />
 
     <Spinner
@@ -77,5 +82,18 @@
         app:layout_constraintBottom_toTopOf="@+id/spinnerGameSystem"
         app:layout_constraintStart_toStartOf="@+id/editTextGameName"
         app:layout_constraintTop_toBottomOf="@+id/editTextGameName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="getImage"
+        android:text="Choose from gallery"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonAddGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonSaveGame" />
 
 </android.support.constraint.ConstraintLayout>
