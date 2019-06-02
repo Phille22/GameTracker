@@ -47,6 +47,7 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
         if(arrayPosition >= 0){
             String gameImageString = intent.getStringExtra("Image");
             String gameNameString = intent.getStringExtra("Name");
+            this.setTitle(gameNameString);
             String gameConsoleString = intent.getStringExtra("Console");
             String hoursPlayedString = intent.getStringExtra("Hours");
             Bitmap currentImage = helpers.getBitmapFromString(gameImageString);

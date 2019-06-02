@@ -92,12 +92,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Collections.sort(gameList, (o1, o2) -> o1.name.compareTo(o2.name));
                 mAdapter.notifyDataSetChanged();
                 recycleSetup();
+                helpers.saveData(gameList, MainActivity.this);
                 return true;
             case R.id.sort_playtime:
                 Collections.sort(gameList, (o1, o2) -> o2.hoursPlayed.compareTo(o1.hoursPlayed));
                 mAdapter.notifyDataSetChanged();
                 recycleSetup();
+                helpers.saveData(gameList, MainActivity.this);
                 return true;
+            case R.id.sort_console:
+                Collections.sort(gameList, (o1, o2) -> o1.platform.compareTo(o2.platform));
+                mAdapter.notifyDataSetChanged();
+                recycleSetup();
+                helpers.saveData(gameList, MainActivity.this);
                 default:
                     return false;
         }

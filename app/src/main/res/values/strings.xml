@@ -6,6 +6,8 @@
     <string name="sort_list">Sort List</string>
     <string name="name_sort">Name</string>
     <string name="playtime_sort">Playtime</string>
+    <string name="delete">Delete</string>
+    <string name="console">Console</string>
 
     <string-array name="game_consoles">
         <item>Nintendo</item>
