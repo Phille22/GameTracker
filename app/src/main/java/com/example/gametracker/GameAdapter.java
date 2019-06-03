@@ -14,11 +14,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
-    private ArrayList<Game> arrayList;
-    private LayoutInflater mInflater;
-    Helpers helpers;
+    final private ArrayList<Game> arrayList;
+    final private LayoutInflater mInflater;
+    private Helpers helpers;
 
-    public GameAdapter(Context context, ArrayList arrayList){
+    GameAdapter(Context context, ArrayList arrayList){
         mInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;
     }
@@ -45,12 +45,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     }
 
     public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView imageView;
-        public TextView gameName;
+        final ImageView imageView;
+        final TextView gameName;
 
         final GameAdapter mAdapter;
 
-        public GameViewHolder(@NonNull View itemView, GameAdapter adapter) {
+        GameViewHolder(@NonNull View itemView, GameAdapter adapter) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             gameName = itemView.findViewById(R.id.textViewGameName);

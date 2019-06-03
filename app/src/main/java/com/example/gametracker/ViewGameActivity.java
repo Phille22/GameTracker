@@ -16,14 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ViewGameActivity extends AppCompatActivity {
-    ImageView gameImage;
-    String gameName;
-    TextView gameConsole;
-    TextView hoursPlayed;
-    String imageBitmapString;
-    int arrayPosition;
-    public ArrayList<Game> gameList;
-    Helpers helpers;
+    private String gameName;
+    private TextView gameConsole;
+    private TextView hoursPlayed;
+    private String imageBitmapString;
+    private String hoursPlayedString;
+    private int arrayPosition;
+    private ArrayList<Game> gameList;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,7 @@ public class ViewGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_game);
         Toolbar toolbar = findViewById(R.id.toolbar);
         gameList = helpers.loadData(this);
-        gameImage = findViewById(R.id.imageViewGameImage);
-        //gameName = findViewById(R.id.textViewGameName);
+        ImageView gameImage = findViewById(R.id.imageViewGameImage);
         gameConsole = findViewById(R.id.textViewGameConsole);
         hoursPlayed = findViewById(R.id.textViewHoursPlayed);
         setSupportActionBar(toolbar);
@@ -43,11 +42,10 @@ public class ViewGameActivity extends AppCompatActivity {
         gameImage.setImageBitmap(stringImage);
         gameName = intent.getStringExtra("Name");
         this.setTitle(gameName);
-        //gameName.setText(gameNames);
         String gameConsoleString = intent.getStringExtra("Console");
         gameConsole.setText(gameConsoleString);
-        String hoursPlayedString = intent.getStringExtra("Hours");
-        hoursPlayed.setText(hoursPlayedString);
+        hoursPlayedString = intent.getStringExtra("Hours");
+        hoursPlayed.setText(getString(R.string.hours_played, hoursPlayedString));
         arrayPosition = intent.getIntExtra("Position", -1);
 
 
@@ -63,12 +61,10 @@ public class ViewGameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete_single:
-                showDeleteAlert();
-                return true;
-                default:
-                    //Gör ingenting
+        //Gör ingenting
+        if (item.getItemId() == R.id.action_delete_single) {
+            showDeleteAlert();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -78,27 +74,27 @@ public class ViewGameActivity extends AppCompatActivity {
         intent.putExtra("Image", imageBitmapString);
         intent.putExtra("Name", gameName);
         intent.putExtra("Console", gameConsole.getText().toString());
-        intent.putExtra("Hours", hoursPlayed.getText().toString());
+        intent.putExtra("Hours", hoursPlayedString);
         intent.putExtra("Position", arrayPosition);
         startActivity(intent);
         finish();
     }
 
-    public void showDeleteAlert(){
+    private void showDeleteAlert(){
         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(ViewGameActivity.this);
         //Varningsmeddelandet
-        myAlertBuilder.setTitle("Är du säker?");
-        myAlertBuilder.setMessage("Vill du radera " + gameName + "?");
+        myAlertBuilder.setTitle(R.string.alert_are_you_sure);
+        myAlertBuilder.setMessage(getString(R.string.alert_delete_single, gameName));
         //Knapparna för varningsmeddelandet
         //Ta bort listan
-        myAlertBuilder.setPositiveButton("JA", (dialog, which) -> {
+        myAlertBuilder.setPositiveButton(R.string.alert_yes, (dialog, which) -> {
             Intent intent = new Intent(this, MainActivity.class);
             gameList.remove(arrayPosition);
             Log.d("RADERAT", "" + arrayPosition);
             helpers.saveData(gameList, ViewGameActivity.this);
             startActivity(intent);
         });
-        myAlertBuilder.setNegativeButton("NEJ", (dialog, which) -> {
+        myAlertBuilder.setNegativeButton(R.string.alert_no, (dialog, which) -> {
             //Gör ingenting
         });
         //Skapa och visa varningsmeddelandet

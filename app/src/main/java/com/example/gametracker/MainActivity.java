@@ -18,10 +18,9 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    public ArrayList<Game> gameList;
-    private RecyclerView mRecyclerView;
+    private ArrayList<Game> gameList;
     private GameAdapter mAdapter;
-    Helpers helpers;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         return super.onOptionsItemSelected(item);
     }
 
-    public void recycleSetup() {
-        mRecyclerView = findViewById(R.id.recyclerView);
+    private void recycleSetup() {
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         mAdapter = new GameAdapter(this, gameList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -111,20 +110,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     //Visa varningsmeddelande
-    public void showAlert(){
+    private void showAlert(){
         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
         //Varningsmeddelandet
-        myAlertBuilder.setTitle("Är du säker?");
-        myAlertBuilder.setMessage("Vill du radera alla spel?");
+        myAlertBuilder.setTitle(R.string.alert_are_you_sure);
+        myAlertBuilder.setMessage(R.string.alert_delete_all);
         //Knapparna för varningsmeddelandet
         //Ta bort listan
-        myAlertBuilder.setPositiveButton("JA", (dialog, which) -> {
+        myAlertBuilder.setPositiveButton(R.string.alert_yes, (dialog, which) -> {
             gameList.clear();
             mAdapter.notifyDataSetChanged();
             helpers.saveData(gameList, MainActivity.this);
             recycleSetup();
         });
-        myAlertBuilder.setNegativeButton("NEJ", (dialog, which) -> {
+        myAlertBuilder.setNegativeButton(R.string.alert_no, (dialog, which) -> {
             //Gör ingenting
         });
         //Skapa och visa varningsmeddelandet

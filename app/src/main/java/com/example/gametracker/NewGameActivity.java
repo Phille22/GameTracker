@@ -3,7 +3,6 @@ package com.example.gametracker;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -26,11 +25,10 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
     private EditText hoursPlayed;
     private Spinner gameConsoleSelect;
     private String gameConsoleSelected;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_IMAGE_GET = 2;
-    public ArrayList<Game> arrayList;
-    public Integer arrayPosition;
-    Helpers helpers;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_GET = 2;
+    private Integer arrayPosition;
+    private Helpers helpers;
 
 
     @Override
@@ -79,7 +77,7 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
     }
 
     //Adapter för spinner
-    public void arrayAdapter(){
+    private void arrayAdapter(){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.game_consoles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gameConsoleSelect.setAdapter(adapter);
@@ -93,6 +91,7 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    //Hämta bild från galleri
     public void getImage(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -104,7 +103,7 @@ public class NewGameActivity extends AppCompatActivity implements AdapterView.On
     //Spara spelet
     public void saveGame(View view){
         String bitMapString;
-        arrayList = helpers.loadData(this);
+        ArrayList<Game> arrayList = helpers.loadData(this);
         Intent intent = new Intent(this, ViewGameActivity.class);
         if(gameImage.getDrawable() == null){
             bitMapString = "";

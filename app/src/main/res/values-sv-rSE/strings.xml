@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GameTracker</string>
+    <string name="alert_are_you_sure">Är du säker?</string>
+    <string name="alert_delete_all">Vill du verkligen radera alla spel?</string>
+    <string name="alert_delete_single">Vill du verkligen radera %1$s?</string>
+    <string name="alert_no">NEJ</string>
+    <string name="alert_yes">JA</string>
+    <string name="choose_from_gallery_button">Välj från galleri</string>
+    <string name="console">Konsol</string>
+    <string name="delete">Ta bort</string>
+    <string name="delete_all">Ta bort alla</string>
+    <string name="game_image_description">Spelbild</string>
+    <string name="hours_played">%1$s timmar</string>
+    <string name="hours_played_hint">Timmar spelade</string>
+    <string name="name_hint">Namn</string>
+    <string name="name_sort">Namn</string>
+    <string name="new_image_description">Ny bild</string>
+    <string name="playtime_sort">Speltid</string>
+    <string name="save_button">Spara</string>
+    <string name="sort_list">Sortera listan</string>
+    <string name="take_picture_button">Ta bild</string>
+    <string name="title_activity_view_game">ViewGameActivity</string>
+</resources>
