@@ -35,6 +35,7 @@ public class ViewGameActivity extends AppCompatActivity {
         gameConsole = findViewById(R.id.textViewGameConsole);
         hoursPlayed = findViewById(R.id.textViewHoursPlayed);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         intent.getExtras();
         imageBitmapString = intent.getStringExtra("Image");
